@@ -169,7 +169,7 @@ def exit_func(tunnel_proc):
 
 async def create_tunnel(udid):
     # TODO: check for Windows
-    tunnel_process = subprocess.Popen(f"sudo /home/pengubow/venv/bin/python3 -m pymobiledevice3 lockdown start-tunnel --script-mode --udid {udid}", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    tunnel_process = subprocess.Popen(f"sudo pymobiledevice3 lockdown start-tunnel --script-mode --udid {udid}", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     atexit.register(exit_func, tunnel_process)
     while True:
         output = tunnel_process.stdout.readline()
