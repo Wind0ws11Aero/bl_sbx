@@ -5,3 +5,4 @@ tmp.downloads.28.sqlitedb
 tmp.BLDatabaseManager.sqlite
 MobileGestalt/*
 server/*
+venv/

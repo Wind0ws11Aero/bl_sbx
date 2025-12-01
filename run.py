@@ -201,7 +201,7 @@ def main_callback(service_provider: LockdownClient, dvt: DvtSecureSocketProxySer
     blconn.close()
     conn.close()
     
-    sys.exit(0)
+    # sys.exit(0)
 
 async def _run_async_rsd_connection(address, port):
     try:
@@ -264,7 +264,7 @@ async def create_tunnel(udid):
             break
     rsd_str = str(rsd_val)
     click.secho("Sucessfully created tunnel: " + rsd_str, fg="green")
-    click.secho(f"address: {rsd_str.split(" ")[0]}", fg="bright_black")
+    click.secho(f"address: {rsd_str.split(' ')[0]}", fg="bright_black")
     port = int(rsd_str.split(" ")[1])
     click.secho(f"port: {port}", fg="bright_black")
     time.sleep(2)
@@ -311,6 +311,18 @@ async def connection_context(service_provider):# Create a LockdownClient instanc
         click.secho("Device not found. Make sure it's unlocked.", fg="red")
     except Exception as e:
         raise Exception(f"Connection not established... {e}")
+
+def run(override_file: str, path_in_ios: str):
+    global lockdown
+    global overridefile
+    global path
+    global info_queue
+    lockdown = create_using_usbmux()
+    overridefile = override_file
+    path = path_in_ios
+    info_queue = queue.Queue()
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    asyncio.run(connection_context(lockdown))
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
